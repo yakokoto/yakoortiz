@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search"
+method="POST">
+  {% csrf_token %}
+  <div class="input-group">
+    <input type="text" class="form-control bg-light border-0 small" placeholder="Buscar..." name="buscar" value="{{ request.POST.buscar }}">
+    <div class="input-group-append">
+      <button class="btn btn-primary" type="submit">
+        <i class="fas fa-search fa-sm"></i>
+      </button>
+    </div>
+  </div>
+</form>
+
+<h2>documentos</h2>
+<p>
+  <a href="{% url 'upload_book' %}" class="btn btn-primary">subir documento</a>
+</p>
+<table class="table mb-0">
+  <thead>
+    <tr>
+      <th>documento</th>
+      <th>expediente</th>
+      <th>Abogados</th>
+      <th>Comentarios</th>
+      <th>Fecha de entrega</th>
+      <th>Fecha de vencimiento</th>
+      <th>Descargar</th>
+    </tr>
+  </thead>
+    <tbody>
+      {% for documento in documentos %}
+      <tr>
+        <td>{{ documento.titulo }}</td>
+        <td>{{ documento.expediente }}</td>
+        <td>{{ documento.abogado }}</td>
+        <td>{{ documento.comentarios }}</td>
+        <td>{{ documento.fechaen }}</td>
+        <td>{{ documento.fechaven }}</td>
+        <td><a href="{{ documento.pdf.url }}" class="btn btn-primary btn-sm" target="_blank">
+            Ver documento
+          </a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+</table>
+<p align="right">
+  <input type="button"  class="btn btn-primary" onclick="history.back()" name="volver atrás" value="regresar">
+  </p>
+{% endblock %}
+
+
+

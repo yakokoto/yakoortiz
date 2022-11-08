@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search"
+method="POST">
+  {% csrf_token %}
+  <div class="input-group">
+    <input type="text" class="form-control bg-light border-0 small" placeholder="Buscar..." name="buscar" value="{{ request.POST.buscar }}">
+    <div class="input-group-append">
+      <button class="btn btn-primary" type="submit">
+        <i class="fas fa-search fa-sm"></i>
+      </button>
+    </div>
+  </div>
+</form>
+
+<h2>documentos</h2>
+<p>
+  <a href="{% url 'upload_fiel' %}" class="btn btn-primary">subir Fiel</a>
+</p>
+<table class="table mb-0">
+  <thead>
+    <tr>
+      <th>Empresa</th>
+      <th>Fiel</th>
+      <th>Ciec</th>
+    </tr>
+  </thead>
+    <tbody>
+      {% for fiel in fieles %}
+      <tr>
+        <td>{{ fiel.Empresa }}</td>
+        <td><a href="{{ fiel.fiel.url }}" class="btn btn-primary btn-sm" target="_blank">
+            Descargar
+          </a>
+        </td>
+        
+        <td><a href="{{ fiel.ciec.url }}" class="btn btn-primary btn-sm" target="_blank">
+            Descargar
+          </a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+</table>
+<p align="right">
+  <input type="button"  class="btn btn-primary" onclick="history.back()" name="volver atrás" value="regresar">
+  </p>
+{% endblock %}
+
+
+
